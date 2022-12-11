@@ -8,8 +8,14 @@ class PostsController < ApplicationController
   end
 
   def create
-    Post.create(params_params)
-    redirect_to new_post_path
+    @post = Post.new(post_params)
+    if params[:back]
+      render :new
+    elsif @post.save
+    redirect_to posts_path, notice: "登録完了！"
+    else
+    render :new
+    end
   end
 
   def show
