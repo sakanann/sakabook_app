@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   def index
+    @posts = Post.all
   end
 
   def new
@@ -7,6 +8,13 @@ class PostsController < ApplicationController
   end
 
   def create
-    Post.create(title: params[:post][:title], content: params[:post][:content])
+    Post.create(params_params)
+    redirect_to new_post_path
+  end
+
+  private
+
+  def post_params
+    params.require(:post).permit(:content)
   end
 end
